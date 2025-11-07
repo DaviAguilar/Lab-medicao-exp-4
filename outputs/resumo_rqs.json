@@ -1,0 +1,21 @@
+{
+  "rq1": {
+    "pearson_stars_commits": 0.10543110893124469,
+    "spearman_stars_commits": 0.15011657235052714,
+    "pearson_stars_contributors": 0.2706325098752721,
+    "spearman_stars_contributors": 0.33573783563629706,
+    "regression_commits": {
+      "slope": 0.1736056070435934,
+      "intercept": 75944.10826333892
+    },
+    "regression_contributors": {
+      "slope": 12.508059367889382,
+      "intercept": 68225.22764063273
+    }
+  },
+  "rq2": {
+    "kruskal_stat": 10.068937385285949,
+    "kruskal_p": 0.12177877577047488,
+    "resumo_csv": "C:\\Users\\andre\\Lab-medicao-exp-4\\code\\..\\outputs\\rq2_resumo_taxa_resolucao_por_linguagem.csv"
+  }
+}

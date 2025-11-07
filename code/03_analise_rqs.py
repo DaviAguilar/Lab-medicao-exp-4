@@ -115,23 +115,36 @@ def analisar_rq1(df):
 
 def analisar_rq2(df):
     print("\n[RQ2] Iniciando análise: Taxa de resolução de issues por linguagem")
+
+    # Filtrar linguagens com número mínimo de repositórios para estabilidade (ex.: >= 10)
     contagem = df["linguagem"].value_counts()
     linguagens_validas = contagem[contagem >= 10].index.tolist()
     sub = df[df["linguagem"].isin(linguagens_validas)].dropna(subset=["taxa_resolucao_issues"])
 
+    # Ordenar linguagens pela mediana da taxa de resolução
     order = sub.groupby("linguagem")["taxa_resolucao_issues"].median().sort_values(ascending=False).index
-    plt.figure(figsize=(10,6))
-    sub.boxplot(column="taxa_resolucao_issues", by="linguagem", grid=False, rot=45, order=list(order))
+
+    plt.figure(figsize=(10, 6))
+    sub_sorted = sub.copy()
+    sub_sorted["linguagem"] = pd.Categorical(sub_sorted["linguagem"], categories=order, ordered=True)
+    sub_sorted = sub_sorted.sort_values("linguagem")
+
+    # Gerar o boxplot (sem o argumento 'order', que causava erro)
+    sub_sorted.boxplot(column="taxa_resolucao_issues", by="linguagem", grid=False, rot=45)
+
     plt.suptitle("")
     plt.title("Taxa de resolução de issues por linguagem")
     plt.xlabel("Linguagem")
     plt.ylabel("Taxa de resolução (issues fechadas / abertas)")
     plt.tight_layout()
+
+    # Salvar gráfico
     path_box = os.path.join(OUTPUT_DIR, "rq2_taxa_resolucao_boxplot.png")
     plt.savefig(path_box)
     plt.close()
     print(f"[RQ2] Boxplot salvo em {path_box}")
 
+    # Teste estatístico: Kruskal-Wallis (não-paramétrico) entre os grupos
     grupos = [g["taxa_resolucao_issues"].dropna().values for _, g in sub.groupby("linguagem")]
     kw_stat, kw_p = None, None
     if len(grupos) >= 2:
@@ -140,6 +153,7 @@ def analisar_rq2(df):
     else:
         print("[RQ2] Poucos grupos válidos para teste estatístico (menos de 2 linguagens).")
 
+    # Resumo por linguagem (média, mediana, etc.)
     resumo = sub.groupby("linguagem")["taxa_resolucao_issues"].agg(["count", "mean", "median", "std"]).sort_values("median", ascending=False)
     resumo_path = os.path.join(OUTPUT_DIR, "rq2_resumo_taxa_resolucao_por_linguagem.csv")
     resumo.to_csv(resumo_path)
