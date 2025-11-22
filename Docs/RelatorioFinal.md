@@ -1,4 +1,4 @@
-# Engajamento e Colaboração em Repositórios Open Source no GitHub
+# Análise de Engajamento e Colaboração em Repositórios Open Source no GitHub
 
 ### Alunos:
 - André Almeida Silva  
