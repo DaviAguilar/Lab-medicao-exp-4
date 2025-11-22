@@ -133,3 +133,7 @@ Esse estudo pode servir como base para **estratégias de fortalecimento de repos
 - Rahman, M.M., Roy, C.K. (2014). *Issue template usage in large-scale GitHub projects.*
 
 ---
+
+
+## Dashboard
+https://lookerstudio.google.com/u/0/reporting/832244eb-cd6f-4185-8af9-17b2d75c1187/page/7rjeF/edit
